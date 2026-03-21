@@ -242,7 +242,7 @@ section > .container {
 
 .hero-overlay {
     z-index: -2;
-    background: linear-gradient(140deg, rgba(7, 43, 76, 0.82), rgba(13, 94, 168, 0.58));
+    background: transparent;
 }
 
 .hero-content {
@@ -553,8 +553,7 @@ section > .container {
 
 /* Contact */
 .contact-section {
-    background: linear-gradient(rgba(2, 35, 57, 0.72), rgba(2, 35, 57, 0.72)),
-        url("../assets/images/gallery/aquaprestige_normandie.jpg") center/cover no-repeat;
+    background: url("../assets/images/gallery/aquaprestige_normandie.jpg") center/cover no-repeat;
     color: #fff;
 }
 

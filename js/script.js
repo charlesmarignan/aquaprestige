@@ -1,0 +1,239 @@
+/* ============================================
+   AQUAPRESTIGE PISCINE - JAVASCRIPT
+   Interactions et Fonctionnalités Premium
+   ============================================ */
+
+/**
+ * Initialisation de l'application au chargement du DOM
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+});
+
+/**
+ * Fonction principale d'initialisation
+ */
+function initializeApp() {
+    setupSmoothScrolling();
+    setupContactForm();
+    setupFloatingContactBar();
+    setupScrollAnimations();
+}
+
+/* ============================================
+   SCROLLING FLUIDE AVEC DÉCALAGE
+   ============================================ */
+function setupSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Vérifier que le lien est une ancre valide
+            if (href === '#') return;
+
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                
+                // Scroll avec décalage pour la barre sticky
+                const offsetTop = target.offsetTop - 100;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+/* ============================================
+   GESTION DE LA BARRE FLOTTANTE DE CONTACT
+   ============================================ */
+function setupFloatingContactBar() {
+    const contactBar = document.querySelector('.floating-contact-bar');
+    
+    if (!contactBar) return;
+
+    // Définir les coordonnées à remplacer
+    const contactInfo = {
+        phone: '+33609099516',
+        whatsapp: '33609099516',
+        email: 'contact@aquaprestige.fr'
+    };
+
+    // Mettre à jour les liens
+    const phoneLink = document.querySelector('.contact-call');
+    const whatsappLink = document.querySelector('.contact-whatsapp');
+    const emailLink = document.querySelector('.contact-email');
+
+    if (phoneLink) phoneLink.href = `tel:${contactInfo.phone}`;
+    if (whatsappLink) whatsappLink.href = `https://wa.me/${contactInfo.whatsapp}`;
+    if (emailLink) emailLink.href = `mailto:${contactInfo.email}`;
+
+    // Afficher/masquer la barre selon le scroll (optionnel)
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', function() {
+        let scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+        if (scrollTop < 100) {
+            // En haut de la page
+            contactBar.style.opacity = '0.8';
+        } else {
+            // Ailleurs
+            contactBar.style.opacity = '1';
+        }
+
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+}
+
+/* ============================================
+   GESTION DU FORMULAIRE DE CONTACT
+   ============================================ */
+function setupContactForm() {
+    const form = document.getElementById('contact-form-element');
+    const successMessage = document.getElementById('form-success');
+
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleContactSubmit(form, successMessage);
+    });
+}
+
+/**
+ * Traitement de la soumission du formulaire
+ * @param {HTMLFormElement} form - Le formulaire
+ * @param {HTMLElement} successMessage - Message de succès
+ */
+function handleContactSubmit(form, successMessage) {
+    // Récupérer les données du formulaire
+    const formData = new FormData(form);
+
+    const data = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email') || 'non fourni',
+        services: formData.getAll('services') || [],
+        message: formData.get('message') || ''
+    };
+
+    // Validation minimale
+    if (!data.name || !data.phone) {
+        alert('Veuillez remplir au moins le nom et le téléphone.');
+        return;
+    }
+
+    if (data.services.length === 0) {
+        alert('Veuillez sélectionner au moins un service.');
+        return;
+    }
+
+    // Si vous avez un backend, envoyer les données avec fetch :
+    /*
+    fetch('votre-api-contact.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Succès:', data);
+        showSuccessMessage(form, successMessage);
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue. Veuillez réessayer.');
+    });
+    */
+
+    // Pour maintenant, afficher un message de succès avec localStorage
+    // (à remplacer par un vrai backend)
+    console.log('Données du formulaire:', data);
+    
+    // Simuler l'envoi
+    form.style.display = 'none';
+    successMessage.style.display = 'block';
+
+    // Réinitialiser le formulaire
+    form.reset();
+
+    // Revenir au formulaire après 5 secondes
+    setTimeout(() => {
+        form.style.display = 'block';
+        successMessage.style.display = 'none';
+    }, 5000);
+}
+
+/**
+ * Afficher le message de succès
+ */
+function showSuccessMessage(form, successMessage) {
+    form.style.display = 'none';
+    if (successMessage) {
+        successMessage.style.display = 'block';
+    }
+
+    // Scroller jusqu'au message
+    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Réinitialiser après 5 secondes
+    setTimeout(() => {
+        form.style.display = 'block';
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+        form.reset();
+    }, 5000);
+}
+
+/* ============================================
+   ANIMATIONS AU SCROLL (Intersection Observer)
+   ============================================ */
+function setupScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Ajouter une classe d'animation
+                entry.target.classList.add('fade-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observer les sections et cartes
+    document.querySelectorAll('.service-card, .feature, .city-badge').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+/* ============================================
+   UTILITAIRES ET HELPERS
+   ============================================ */
+
+/**
+ * Copier un texte dans le presse-papiers
+ */
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Copié !');
+    }).catch(function(err) {
+        console.error('Erreur:', err);
+    });
+}
+
+/**
+ * Ouvrir un lien dans une nouvelle fenêtre
+ */
+function openExternalLink(url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+}

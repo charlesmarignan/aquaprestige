@@ -342,7 +342,7 @@ section > .container {
 
 .hero-title {
     font-size: clamp(2rem, 5vw, 3.4rem);
-    line-height: 1.15;
+    line-height: 0.95;
     margin-bottom: var(--space-3);
     text-wrap: balance;
 }
@@ -350,6 +350,8 @@ section > .container {
 .hero-title-sub {
     font-size: 0.65em;
     font-weight: 400;
+    display: block;
+    margin-top: -0.15em;
 }
 
 .hero-subtitle {

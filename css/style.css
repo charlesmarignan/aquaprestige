@@ -476,26 +476,42 @@ section > .container {
 .service-detail {
     background: var(--bg);
     border-top: 1px solid var(--line);
+    position: relative;
+    background-size: cover;
+    background-position: center bottom;
+    background-attachment: fixed;
+}
+
+.service-detail::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(2, 46, 75, 0.75), rgba(13, 91, 135, 0.75));
+    z-index: 0;
 }
 
 .service-detail.alt {
-    background: var(--surface-soft);
+    background-color: var(--surface-soft);
 }
 
 .service-detail-content {
     max-width: 980px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .service-detail-content h2 {
     font-size: clamp(1.5rem, 3vw, 2rem);
-    color: var(--brand-dark);
+    color: #ffffff;
     margin-bottom: var(--space-2);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .service-detail-content .lead {
-    color: var(--muted);
+    color: #f0f0f0;
     margin-bottom: var(--space-4);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .service-features {

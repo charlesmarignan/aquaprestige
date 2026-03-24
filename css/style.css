@@ -254,7 +254,7 @@ section > .container {
 .hero-logo {
     display: flex;
     justify-content: center;
-    margin-bottom: -0.3rem;
+    margin-bottom: -1.2rem;
 }
 
 .hero-logo img {

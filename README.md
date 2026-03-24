@@ -17,43 +17,35 @@ Site web monopage professionnel pour **AquaPrestige Piscine**, spécialistes de 
 
 ```
 AquaPrestige/
-├── index.html                    # Page principale complète
+├── index.html
+├── mentions-legales.html
 ├── css/
-│   └── style.css                # Tous les styles (2500+ lignes)
+│   └── style.css
 ├── js/
-│   └── script.js                # Toutes les interactions JS
+│   └── script.js
 ├── assets/
 │   ├── images/
-│   │   ├── logo/                # PLACER: logo-aquaprestige.png
-│   │   ├── hero/                # PLACER: hero-piscine.jpg
-│   │   ├── services/
-│   │   │   ├── entretien.jpg    # Image service entretien
-│   │   │   ├── depannage.jpg    # Image service dépannage
-│   │   │   ├── local-technique.jpg
-│   │   │   └── hivernage.jpg
-│   │   └── gallery/             # Images de galerie (optionnel)
+│   │   ├── gallery/
+│   │   └── logo/
 │   └── videos/
+│       ├── background/
 │       └── hero/
-│           └── piscine-hero.mp4 # Vidéo fond hero (optionnel)
-└── README.md                    # Cette documentation
+└── README.md
 ```
 
 ## 🚀 Démarrage Rapide
 
 ### 1. Installation des Assets
 
-**Images obligatoires à placer :**
+**Assets actuellement utilisés par le site :**
 
-- `assets/images/logo/logo-aquaprestige.png` - Logo de l'entreprise (50x50px min)
-- `assets/images/hero/hero-piscine.jpg` - Image de fond hero (1920x1080px)
-- `assets/images/services/entretien.jpg` - Photo service entretien
-- `assets/images/services/depannage.jpg` - Photo service dépannage
-- `assets/images/services/local-technique.jpg` - Photo local technique
-- `assets/images/services/hivernage.jpg` - Photo hivernage
+- `assets/images/logo/logo goute.png` - logo principal affiché dans le hero
+- `assets/images/gallery/aquaprestige_le_havre.jpg` - visuel section entretien
+- `assets/images/gallery/aquaprestige_le_havre_deauville.jpg` - visuel section dépannage
+- `assets/images/gallery/aquaprestige_normandie.jpg` - visuel de secours et fond formulaire
+- `assets/videos/background/acceuil_aquaprestige.mp4` - vidéo de fond hero
 
-**Vidéo optionnelle :**
-
-- `assets/videos/hero/piscine-hero.mp4` - Fond vidéo animée pour le hero
+Le dossier `assets/videos/hero/` est présent mais n'est pas utilisé par la page actuelle.
 
 ### 2. Personnalisation des Coordonnées
 
@@ -78,58 +70,49 @@ const contactInfo = {
 
 ```bash
 # Option 1 : Ouvrir directement le fichier
-Ouvrir index.html dans votre navigateur (double-clic)
+Ouvrir index.html dans votre navigateur
 
 # Option 2 : Avec un serveur local (recommandé)
-# Avec Python 3
 python -m http.server 8000
-
-# Avec Node.js
-npx http-server
 ```
 
 Accéder à : `http://localhost:8000`
 
 ## 📱 Sections du Site
 
-### 1. **Header / Navigation Sticky**
-- Logo centré
-- Menu horizontal responsive
-- Menu burger sur mobile
-
-### 2. **Barre Flottante de Contact** (Toujours visible)
+### 1. **Barre Flottante de Contact** (Toujours visible)
 - Bouton Appeler
 - Bouton WhatsApp
 - Bouton Email
 - Bouton Demande d'info
 
-### 3. **Section Hero**
+### 2. **Section Hero**
 - Fond vidéo ou image responsive
 - Titre principal et sous-titre
 - 2 boutons CTA (Appeler / Formulaire)
 
-### 4. **Services** (4 cartes)
+### 3. **Navigation rapide par services**
 - Entretien Piscine
-- Dépannage
-- Création Local Technique
+- Dépannage diagnostic
+- Création de local technique
 - Hivernage
 
-### 5. **Sections Détails de Services**
+### 4. **Sections Détails de Services**
 - Détails complets de chaque service
 - Listes de caractéristiques
 - Boutons d'action vers le formulaire
 
-### 6. **Zone d'Intervention**
+### 5. **Zone d'Intervention**
 - Texte optimisé SEO mentionnant les villes
 - Badges visuels des villes desservies
 
-### 7. **Formulaire de Contact**
+### 6. **Formulaire de Contact**
 - Champs : Nom, Téléphone, Email
 - Cases à cocher pour les services
 - Message optionnel
 - Message de confirmation
 
-### 8. **Footer**
+### 7. **Footer**
 - Informations de contact
 - Zones d'intervention
 - Liens réseaux sociaux

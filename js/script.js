@@ -17,6 +17,7 @@ function initializeApp() {
     setupSmoothScrolling();
     setupContactForm();
     setupFloatingContactBar();
+    setupHeroMediaFallback();
     setupScrollAnimations();
 }
 
@@ -29,14 +30,14 @@ function setupSmoothScrolling() {
             const href = this.getAttribute('href');
             
             // Vérifier que le lien est une ancre valide
-            if (href === '#') return;
+            if (!href || href === '#') return;
 
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
                 
                 // Scroll avec décalage pour la barre sticky
-                const offsetTop = target.offsetTop - 100;
+                const offsetTop = Math.max(target.getBoundingClientRect().top + window.scrollY - 100, 0);
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
@@ -71,10 +72,8 @@ function setupFloatingContactBar() {
     if (emailLink) emailLink.href = `mailto:${contactInfo.email}`;
 
     // Afficher/masquer la barre selon le scroll (optionnel)
-    let lastScrollTop = 0;
-
     window.addEventListener('scroll', function() {
-        let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
         if (scrollTop < 100) {
             // En haut de la page
@@ -83,9 +82,31 @@ function setupFloatingContactBar() {
             // Ailleurs
             contactBar.style.opacity = '1';
         }
-
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
+}
+
+/* ============================================
+   FALLBACK MEDIA HERO
+   ============================================ */
+function setupHeroMediaFallback() {
+    const hero = document.querySelector('.hero');
+    const heroVideo = document.querySelector('.hero-video');
+
+    if (!hero || !heroVideo) return;
+
+    const fallbackImage = 'assets/images/gallery/aquaprestige_normandie.jpg';
+    hero.style.background = `linear-gradient(rgba(2, 46, 75, 0.38), rgba(2, 46, 75, 0.38)), url("${fallbackImage}") center/cover no-repeat`;
+
+    heroVideo.addEventListener('error', function() {
+        hero.classList.add('hero-video-unavailable');
+    });
+
+    const attemptPlayback = heroVideo.play();
+    if (attemptPlayback && typeof attemptPlayback.catch === 'function') {
+        attemptPlayback.catch(function() {
+            hero.classList.add('hero-video-unavailable');
+        });
+    }
 }
 
 /* ============================================
@@ -195,6 +216,13 @@ function showSuccessMessage(form, successMessage) {
    ANIMATIONS AU SCROLL (Intersection Observer)
    ============================================ */
 function setupScrollAnimations() {
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.service-card, .feature, .city-badge').forEach(el => {
+            el.classList.add('fade-in');
+        });
+        return;
+    }
+
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'

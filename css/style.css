@@ -254,11 +254,11 @@ section > .container {
 .hero-logo {
     display: flex;
     justify-content: center;
-    margin-bottom: var(--space-4);
+    margin-bottom: -0.3rem;
 }
 
 .hero-logo img {
-    width: clamp(180px, 26vw, 320px);
+    width: clamp(198px, 28.6vw, 352px);
     height: auto;
     object-fit: contain;
     display: block;

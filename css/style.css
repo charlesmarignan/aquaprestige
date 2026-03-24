@@ -347,6 +347,11 @@ section > .container {
     text-wrap: balance;
 }
 
+.hero-title-sub {
+    font-size: 0.65em;
+    font-weight: 400;
+}
+
 .hero-subtitle {
     font-size: clamp(1.05rem, 2.5vw, 1.45rem);
     font-weight: 600;
